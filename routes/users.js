@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (knex) => {
 
@@ -11,8 +11,8 @@ module.exports = (knex) => {
       .from("users")
       .then((results) => {
         res.json(results);
-    });
+      });
   });
 
   return router;
-}
+};

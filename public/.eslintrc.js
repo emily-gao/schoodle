@@ -2,7 +2,7 @@ module.exports = {
   "parserOptions": {
     "ecmaVersion": 5
   },
-  "env" : {
+  "env": {
     "browser": true,
     "node": false,
     "jquery": true
@@ -16,11 +16,11 @@ module.exports = {
     "arrow-spacing": "off",
     "block-scoped-var": "error",
     "block-spacing": ["error", "always"],
-    "brace-style": ["error", "1tbs", {"allowSingleLine": true}],
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "callback-return": "off",
     "camelcase": "error",
     "comma-dangle": ["error", "never"],
-    "comma-spacing": ["error", {"before": false, "after": true}],
+    "comma-spacing": ["error", { "before": false, "after": true }],
     "comma-style": ["error", "last"],
     "complexity": "error",
     "computed-property-spacing": "off",
@@ -45,7 +45,7 @@ module.exports = {
     "indent": ["error", 2],
     "init-declarations": "off",
     "jsx-quotes": "off",
-    "key-spacing": ["error", {"beforeColon": false, "afterColon": true}],
+    "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
     "keyword-spacing": "off",
     "linebreak-style": "off",
     "lines-around-comment": "off",
@@ -155,7 +155,7 @@ module.exports = {
     "no-ternary": "off",
     "no-this-before-super": "error",
     "no-throw-literal": "off",
-    "no-trailing-spaces": ["error", {"skipBlankLines": true}],
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
     "no-undef": "off",
     "no-undef-init": "off",
     "no-undefined": "off",
@@ -201,7 +201,7 @@ module.exports = {
     "space-before-blocks": "off",
     "space-before-function-paren": "off",
     "space-in-parens": "off",
-    "space-infix-ops": [2, {"int32Hint": false}],
+    "space-infix-ops": [2, { "int32Hint": false }],
     "space-unary-ops": "off",
     "spaced-comment": "off",
     "strict": "off",
