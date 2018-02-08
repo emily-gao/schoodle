@@ -4,7 +4,8 @@ exports.up = async function(knex, Promise) {
     table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
     table.uuid('event_id').notNullable().references('events.id');
     table.text('option').notNullable();
-    table.timestamps();
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 

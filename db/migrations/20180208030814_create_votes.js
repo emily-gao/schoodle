@@ -6,7 +6,8 @@ exports.up = async function(knex, Promise) {
     table.uuid('user_id').notNullable().references('users.id');
     table.uuid('event_option_id').notNullable().references('event_options.id');
     table.unique(['user_id', 'event_option_id']);
-    table.timestamps();
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 

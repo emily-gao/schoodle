@@ -7,7 +7,8 @@ exports.up = async function(knex, Promise) {
     table.text('description');
     table.text('value_type').defaultTo('date').notNullable();
     table.uuid('organizer_id').notNullable().references('users.id');
-    table.timestamps();
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 

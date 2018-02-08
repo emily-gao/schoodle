@@ -3,7 +3,8 @@ exports.up = async function(knex, Promise) {
   return knex.schema.createTable("users", function(table) {
     table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
     table.text('username').notNullable();
-    table.timestamps();
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
   });
 };
 
