@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "local": "./node_modules/.bin/nodemon --ignore public/",
-    "knex": "./node_modules/.bin/knex"
+    "knex": "./node_modules/.bin/knex",
+    "knex-migrate": "./node_modules/.bin/knex-migrate"
   },
   "author": "Lighthouse Labs",
   "license": "ISC",
@@ -20,7 +21,8 @@
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
-    "pg": "^6.0.2"
+    "pg": "^6.0.2",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.9.2",
