@@ -1,21 +1,4 @@
 {
-<<<<<<< HEAD
-    "all": {
-        "max_preserve_newlines": 3
-    },
-    "css": {
-        "preserve_newlines": false
-    },
-    "html": {
-        "indent_inner_html": true
-    },
-    "js": {
-        "operator_position": "after-newline"
-    },
-    "json": {
-        "brace_style": "collapse-preserve-inline"
-    }
-=======
   "all": {
     "end_with_newline": true,
     "max_preserve_newlines": 3,
@@ -33,5 +16,4 @@
   "json": {
     "brace_style": "collapse-preserve-inline"
   }
->>>>>>> d80e8b2369997c761b7d22195256f81709c94db3
 }
