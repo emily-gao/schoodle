@@ -1,5 +1,6 @@
 {
   "all": {
+    "end_with_newline": true,
     "max_preserve_newlines": 3,
     "indent_size": 2
   },
