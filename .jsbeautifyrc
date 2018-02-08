@@ -1,0 +1,17 @@
+{
+    "all": {
+        "max_preserve_newlines": 3
+    },
+    "css": {
+        "preserve_newlines": false // https://github.com/victorporof/Sublime-HTMLPrettify/issues/492
+    },
+    "html": {
+        "indent_inner_html": true,
+    },
+    "js": {
+        "operator_position": "after-newline"
+    },
+    "json": {
+        "brace_style": "collapse-preserve-inline"
+    }
+}
