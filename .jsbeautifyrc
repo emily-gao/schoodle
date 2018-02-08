@@ -3,10 +3,10 @@
         "max_preserve_newlines": 3
     },
     "css": {
-        "preserve_newlines": false // https://github.com/victorporof/Sublime-HTMLPrettify/issues/492
+        "preserve_newlines": false
     },
     "html": {
-        "indent_inner_html": true,
+        "indent_inner_html": true
     },
     "js": {
         "operator_position": "after-newline"
