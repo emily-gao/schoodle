@@ -22,10 +22,14 @@ function addClientRoutes(router, knex) {
     response.render('index');
   });
 
+  router.post('/events', (request, response) => {
+    response.render('index');
+  });
+
   router.get('/events/:id', (req, res) => {
     const eventsQueryParams = { id: req.params.id };
     const eventOptionsQueryParams = { event_id: req.params.id };
-    const votesQueryParams = ()
+    const votesQueryParams = { event_option_id: }
 
     Promise.all([
       internalApiCall('events', eventsQueryParams),
@@ -44,6 +48,7 @@ function addClientRoutes(router, knex) {
       } else {
         res.render('event-guest', templateVars);
       }
+
     });
 
   });

@@ -45,6 +45,12 @@ $(function() {
         });
       });
     });
+
+    $.ajax({
+      method: "POST",
+      url: "/events",
+      data: $("[name='username']").serialize()
+    });
  
   });
   
