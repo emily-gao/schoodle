@@ -2,28 +2,27 @@
 <html lang="en">
 
 <head>
-    <%- include(‘./partials/_head’, {title: ‘Index Page’}); %>
+    <%- include('./partials/_head', {title: 'Index Page'}); %>
 </head>
 
 <body>
-    
-        <form>
-            <h1>Step 1</h1>
-            
-            <input type="text" name="username" placeholder="Type your name">
-            <input type="text" name="event_name" placeholder="Type your event name">
-            <input type="text" name="description" placeholder="Describe your event">
-            
-            <h1>Step 2: Select <a href="#">DATE</a> or <a href="#">TEXT</a></h1>     
-            
-            <div class="input-fields-wrap">
-                <button class="add-field-button">Add More Fields</button>
-                <div><input class="options" type="text" name="option"></div>
-            </div>
-            
-            <button class="new-schoodle">Create a Schoodle!</button>
-        </form>
+  <form>
+    <%- include ./partials/_navbar %>
+    <h1>Step 1</h1>
 
+    <input type="text" name="username" placeholder="Type your name">
+    <input type="text" name="event_name" placeholder="Type your event name">
+    <input type="text" name="description" placeholder="Describe your event">
+
+    <h1>Step 2: Select <a href="#">DATE</a> or <a href="#">TEXT</a></h1>
+
+    <div class="input-fields-wrap">
+      <button class="add-field-button">Add More Fields</button>
+      <div><input class="options" type="text" name="option"></div>
+    </div>
+
+    <button class="new-schoodle">Create a Schoodle!</button>
+  </form>
 </body>
 
 </html>

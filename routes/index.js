@@ -4,7 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const request = require('request-promise');
-const userAuthenticationHelper = require('./user-authentication-helper');
+const userAuthenticationHelper = require('./helpers/user-authentication-helper');
 
 function internalApiCall(table, queryParams, method = 'GET') {
   return request({
