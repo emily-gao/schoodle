@@ -5,6 +5,7 @@ exports.up = async function(knex, Promise) {
     table.uuid('url').notNullable().defaultTo(knex.raw('uuid_generate_v4()'));
     table.text('event_name').notNullable();
     table.text('description');
+    table.text('final_decision_id');
     table.text('value_type').defaultTo('date').notNullable();
     table.uuid('organizer_id').notNullable().references('users.id');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
