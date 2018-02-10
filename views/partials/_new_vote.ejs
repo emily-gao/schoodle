@@ -1,0 +1,17 @@
+<!-- add one more row for the new user -->
+
+<form class="new-votes">
+
+  <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
+
+  <!-- when valid user_id cookie is not present, ask user to input username and email -->
+  <input type="text" name="username" placeholder="Type your name here">
+  <input type="email" name="email" placeholder="Type your email here">
+
+  <% event_options.forEach(function(event_option) { %>
+    <!-- todo: register vote through a checkbox -->
+    <input type="checkbox" id=<%=`${event_option.id}-checkbox` %>>
+  <% }); %>
+
+  <button>Save</button>
+</form>

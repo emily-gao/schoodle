@@ -14,3 +14,24 @@
 
   <button id="notify" class="btn btn-primary btn-block">Notify Participants</button>
 </form>
+
+
+    <!-- list counts of each event option  -->
+    <% users.forEach(function(user) { %>
+      <p><%= user %></p>
+      <% event_options.forEach(function(event_option) { %>
+        <% votes.forEach(function(vote) { %>
+          <% var count = 0; %>
+          <% if (vote.user_id === user && vote.event_option_id === event_option) { %>
+            <% <li><%= count++ %></li> %>
+          <% }); %>
+          <%= count %>
+        <% }); %>
+      <% }); %>
+    <% }); %>
+
+    <!-- todo: highlight vote with the biggest count -->
+
+    <!-- todo: register final decision -->
+
+    <!-- todo: once a final decision is made, users cannot vote anymore -->
