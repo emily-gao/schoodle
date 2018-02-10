@@ -1,0 +1,16 @@
+<section>
+  <h1><%= event.event_name %></h1>
+  <p><%= event.description %></p>
+  
+  <form>
+    <input type="text" name="username" placeholder="Type your name here">
+    
+    <ul>
+      <% event_options.forEach(function(event_option) { %>
+        <li><%= event_option.option %></li>
+      <% }); %>
+    </ul>
+    
+    <button>Save</button>
+  </form>
+</section>
