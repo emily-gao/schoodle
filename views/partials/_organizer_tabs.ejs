@@ -2,15 +2,19 @@
   <div class="panel with-nav-tabs panel-default">
     <div class="panel-heading">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#voteTab" data-toggle="tab">Vote</a></li>
+        <li class="active"><a href="#newVoteTab" data-toggle="tab">Vote</a></li>
+        <li><a href="#viewVotesTab" data-toggle="tab">Spy</a></li>
         <li><a href="#chooseTab" data-toggle="tab">Choose</a></li>
         <li><a href="#editTab" data-toggle="tab">Edit</a></li>
       </ul>
     </div>
     <div class="panel-body">
       <div class="tab-content">
-        <div class="tab-pane fade in active" id="voteTab">
-          <%- include ./_event_vote %>
+        <div class="tab-pane fade in active" id="newVoteTab">
+          <%- include ./_event_new_vote %>
+        </div>
+        <div class="tab-pane fade" id="spyVotesTab">
+            <%- include ./_event_spy_votes %>
         </div>
         <div class="tab-pane fade" id="chooseTab">
           <%- include ./_event_choose %>
