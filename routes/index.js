@@ -4,7 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const request = require('request-promise');
-const userAuthenticationHelper = require('./user-authentication-helper');
+const userAuthenticationHelper = require('./helpers/user-authentication-helper');
 
 function internalApiCall(table, queryParams, method = 'GET') {
   return request({
@@ -25,7 +25,7 @@ function addClientRoutes(router, knex) {
   router.get('/events/:id', (req, res) => {
     const eventsQueryParams = { id: req.params.id };
     const eventOptionsQueryParams = { event_id: req.params.id };
-    const votesQueryParams = ()
+    const votesQueryParams = {};
 
     Promise.all([
       internalApiCall('events', eventsQueryParams),
