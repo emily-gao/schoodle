@@ -27,7 +27,14 @@ $(function() {
     $.ajax({
       method: "POST",
       url: "api/users",
-      data: $("[name='username']").serialize()
+      data: $("[name='username']", [name='email']).serialize(),
+      success: function(user_id) {
+        $.ajax({
+          method: "POST",
+          url: "/register",
+          data: `user_id=${user_id}`
+        });
+      }
     }).then(function(user_id) {  
       return $.ajax({
         method: "POST",
@@ -45,13 +52,32 @@ $(function() {
         });
       });
     });
-
-    $.ajax({
-      method: "POST",
-      url: "/events",
-      data: $("[name='username']").serialize()
-    });
  
   });
   
+  $('.new-votes').click(function(event) {
+    event.preventDefault();
+
+    // when valid user_id cookie is not present 
+    $.ajax({
+      method: "POST",
+      url: "api/users",
+      data: $("[name='username'], [name='email']").serialize(),
+      success: function(user_id) {
+        $.ajax({
+          method: "POST",
+          url: "/register",
+          data: `user_id=${user_id}`
+        });
+      }
+    }).then(function(user_id) {
+      $.ajax({
+        method: "POST",
+        url: "api/votes",
+        data: $()
+      });
+    })
+
+  });
+
 });
