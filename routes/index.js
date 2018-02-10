@@ -4,17 +4,8 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const request = require('request-promise');
-const userAuthenticationHelper = require('./helpers/user-authentication-helper');
-
-function internalApiCall(table, queryParams, method = 'GET') {
-  return request({
-    url: `http://localhost:${PORT}/api/${table}`,
-    qs: queryParams,
-    method: method,
-    json: true
-  });
-}
-
+const userHelper = require('./helpers/user-helper');
+const internalApiCall = require('./helpers/internal-api-call-helper');
 
 function addClientRoutes(router, knex) {
 
@@ -22,8 +13,12 @@ function addClientRoutes(router, knex) {
     response.render('index');
   });
 
-  router.post('/events', (request, response) => {
-    response.render('index');
+  router.post('/register', (request, response) => {
+    req.session.user_id = req.params.user_id;
+  });
+
+  route.get('/session', (request, response) => {
+    return response.json{ value: userHelper.isUserSessionPresent(request) };
   });
 
   router.get('/events/:id', (req, res) => {
@@ -37,7 +32,7 @@ function addClientRoutes(router, knex) {
       internalApiCall('votes', votesQueryParams)
     ]).then(([event, event_options]) => {
 
-      const isUserOrganizer = userAuthenticationHelper(event, req);
+      const isUserOrganizer = userHelper.isUserOrganizer(event, req);
       const templateVars = {
         event: event[0],
         event_options: event_options
