@@ -25,10 +25,12 @@ function addClientRoutes(router, knex) {
   router.get('/events/:id', (req, res) => {
     const eventsQueryParams = { id: req.params.id };
     const eventOptionsQueryParams = { event_id: req.params.id };
+    const votesQueryParams = ()
 
     Promise.all([
       internalApiCall('events', eventsQueryParams),
-      internalApiCall('event_options', eventOptionsQueryParams)
+      internalApiCall('event_options', eventOptionsQueryParams),
+      internalApiCall('votes', votesQueryParams)
     ]).then(([event, event_options]) => {
 
       const isUserOrganizer = userAuthenticationHelper(event, req);
