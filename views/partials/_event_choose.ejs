@@ -1,16 +1,16 @@
 <script type="text/javascript" src="scripts/event_choose.js"></script>
 
 <h1><%= event.event_name %></h1>
- <p><%= event.description %></p>
+<p><%= event.description %></p>
 
- <form>
-   <input type=“text” name=“username” placeholder=“Type your name here”>
+<form>
+  <input type=“text” name=“username” placeholder=“Type your name here”>
 
-   <ul>
-     <% event_options.forEach(function(event_option) { %>
-       <a class="event-choice btn btn-danger btn-block"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %></a>
-     <% }); %>
-   </ul>
+  <ul id="eventChoices" data-current-choice="<%= event.choice_id %>">
+   <% event_options.forEach(function(event_option) { %>
+      <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %></a>
+    <% }); %>
+  </ul>
 
-   <button class="btn btn-primary btn-block">Notify Participants</button>
- </form>
+  <button id="notify" class="btn btn-primary btn-block">Notify Participants</button>
+</form>
