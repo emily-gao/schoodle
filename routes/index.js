@@ -90,7 +90,9 @@ function addClientRoutes(router, knex) {
         }));
       })
     ]).then(() => {
-      if (request.get('Content-Type') === 'application/json') {
+      if (!templateVars.event) {
+        response.status(404).send('404: Event not found');
+      } else if (request.get('Content-Type') === 'application/json') {
         response.json(templateVars);
       } else if (userHelper.isUserOrganizer(templateVars.event, request)) {
         response.render('event-organizer', templateVars);
