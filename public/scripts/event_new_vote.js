@@ -1,8 +1,9 @@
 $(function() {
-  
+
   // On load
   var url = $("[name='url'").val();
-  
+  var flash = generateFlashFunction($('#appModal'));
+
   $(":checkbox").change(function(){
     $(this).val($(this).is(":checked") ? true : false);
   });
@@ -16,12 +17,12 @@ $(function() {
       .find("[name='username']")
       .val(user.username)
       .prop('disabled', true);
-      
+
       $('.new-vote-form')
       .find("[name='email']")
       .val(user.email)
       .prop('disabled', true);
-        
+
       $.ajax({
         method: "GET",
         url: '/events/' + url,
@@ -46,11 +47,11 @@ $(function() {
       });
     }
   });
-  
+
   // $("#checkbox1").is(':checked', function(){
   //   $("#checkbox1").attr('value', 'true');
   // });
-  
+
   $('.new-vote-form').on('submit', function(event) {
     event.preventDefault();
     console.log('new-vote-form clicked');
@@ -103,8 +104,8 @@ $(function() {
 
       });
 
-    })
-  
+    }).then(flash('Thanks for voting :)', 'Votes Saved'));
+
   });
- 
+
 });

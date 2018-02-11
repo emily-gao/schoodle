@@ -19,4 +19,10 @@ $(document).ready(function() {
     var currentChoiceButton = $('.event-choice[data-event-option-id=' + currentChoiceId + ']');
     refreshChoices(currentChoiceButton);
   }
+
+  var flash = generateFlashFunction($('#appModal'));
+  $('#notify').on('click', function(event) {
+    event.preventDefault();
+    flash('Message: Notifying Guests', 'Notification Title');
+  });
 });
