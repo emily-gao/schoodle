@@ -7,13 +7,14 @@
   <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
 
   <!-- when valid user_id cookie is not present, ask user to input username and email -->
+  <input type="text" name="url" value="<%= event.url %>" style="display:none">
   <input type="text" name="username" placeholder="Type your name here">
   <input type="email" name="email" placeholder="Type your email here">
 
   <% event_options.forEach(function(event_option) { %>
     <!-- todo: register vote through a checkbox -->
     <p><%= event_option.option %></p>
-    <input type="checkbox" class="vote" value = "false" data-event_option=<%= event_option.id %> >
+    <input type="checkbox" class="vote" value="false" data-event_option="<%= event_option.id %>">
   <% }); %>
 
   <button>Save</button>

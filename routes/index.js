@@ -14,7 +14,9 @@ function addClientRoutes(router, knex) {
 
   router.post('/register', (request, response) => {
     request.session.user_id = request.body.user_id;
-    response.status(200).send();
+    userHelper.isUserSessionPresent(request, (result) => {
+      response.json(result);
+    });
   });
 
   router.get('/session', (request, response) => {
