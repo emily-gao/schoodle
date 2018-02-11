@@ -1,6 +1,8 @@
+<script type="text/javascript" src="/scripts/event_new_vote.js"></script>
+
 <!-- add one more row for the new user -->
 
-<form class="new-votes">
+<form class="new-vote-form">
 
   <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
 
@@ -10,7 +12,8 @@
 
   <% event_options.forEach(function(event_option) { %>
     <!-- todo: register vote through a checkbox -->
-    <input type="checkbox" id=<%=`${event_option.id}-checkbox` %>>
+    <p><%= event_option.option %></p>
+    <input type="checkbox" class="vote" value = "false" data-event_option=<%= event_option.id %> >
   <% }); %>
 
   <button>Save</button>
