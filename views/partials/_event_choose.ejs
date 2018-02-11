@@ -1,8 +1,5 @@
 <script type="text/javascript" src="/scripts/event_choose.js"></script>
 
-<h1><%= event.event_name %></h1>
-<p><%= event.description %></p>
-
 <form>
   <ul id="eventChoices" data-current-choice="<%= event.choice_id %>">
    <% event_options.forEach(function(event_option) { %>
@@ -15,18 +12,18 @@
 
 
     <!-- list counts of each event option  -->
-    <% users.forEach(function(user) { %>
-      <p><%= user %></p>
-      <% event_options.forEach(function(event_option) { %>
-        <% votes.forEach(function(vote) { %>
-          <% var count = 0; %>
-          <% if (vote.user_id === user && vote.event_option_id === event_option) { %>
-            <% <li><%= count++ %></li> %>
-          <% }); %>
-          <%= count %>
-        <% }); %>
-      <% }); %>
-    <% }); %>
+<!--     <%# users.forEach(function(user) { %>
+      <p><%#= user %></p>
+      <%# event_options.forEach(function(event_option) { %>
+        <%# user.votes.forEach(function(vote) { %>
+          <%# var count = 0; %>
+          <%# if (vote.user_id === user && vote.event_option_id === event_option) { %>
+            <li><%#= count++ %></li>
+          <%# } %>
+          <%#= count %>
+        <%# }); %>
+      <%# }); %>
+    <%# }); %> -->
 
     <!-- todo: highlight vote with the biggest count -->
 
