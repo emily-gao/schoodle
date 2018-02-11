@@ -12,7 +12,7 @@ module.exports = {
 
   isUserSessionPresent: function(request, callback) {
     if (!request.session || !request.session.user_id) {
-      return false;
+      callback(false);
     }
     const queryParams = { id: request.session.user_id };
     internalApiCall('users', queryParams)
