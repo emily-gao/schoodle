@@ -5,35 +5,36 @@ const PORT = process.env.PORT || 8080;
 
 const request = require('request-promise');
 const userHelper = require('./helpers/user-helper');
-const internalApiCall = require('./helpers/internal-api-call-helper');
 
 function addClientRoutes(router, knex) {
 
   router.get('/', (request, response) => {
+    console.log(request.session);
     response.render('index');
   });
 
   router.post('/register', (request, response) => {
-    req.session.user_id = req.params.user_id;
+    console.log(request.body);
+    request.session.user_id = request.body.user_id;
   });
 
-  route.get('/session', (request, response) => {
-    return response.json{ value: userHelper.isUserSessionPresent(request) };
+  router.get('/session', (request, response) => {
+    return response.json(userHelper.isUserSessionPresent(request));
   });
 
-  router.get('/events/:id', (req, res) => {
+  router.get('/events/:id', (request, res) => {
 
     let templateVars = {};
 
     const eventQuery = knex
       .select('*')
       .from('events')
-      .where('id', req.params.id);
+      .where('id', request.params.id);
 
     const optionsQuery = knex
       .select('*')
       .from('event_options')
-      .where('event_id', req.params.id);
+      .where('event_id', request.params.id);
 
     const optionVotesQuery = function(option) {
       return knex
@@ -49,7 +50,7 @@ function addClientRoutes(router, knex) {
       .leftJoin('event_options', 'events.id', 'event_options.event_id')
       .leftJoin('votes', 'event_options.id', 'votes.event_option_id')
       .leftJoin('users', 'votes.user_id', 'users.id')
-      .where('events.id', req.params.id);
+      .where('events.id', request.params.id);
 
     const userEventVotesQuery = function(user, event) {
       return knex
@@ -80,7 +81,7 @@ function addClientRoutes(router, knex) {
         }));
       })
     ]).then(() => {
-      if (userAuthenticationHelper(templateVars.event, req)) {
+      if (userHelper.isUserOrganizer(templateVars.event, req)) {
         res.render('event-organizer', templateVars);
       } else {
         res.render('event-guest', templateVars);
