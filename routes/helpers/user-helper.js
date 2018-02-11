@@ -1,4 +1,4 @@
-const internalApiCall = require('./helpers/internal-api-call-helper');
+const internalApiCall = require('./internal-api-call-helper');
 
 module.exports = {
   
@@ -14,9 +14,18 @@ module.exports = {
     if (!req.session || !req.session.user_id) {
       return false;
     }
-    const queryParams = { user_id: req.session.user_id};
+    const queryParams = { id: req.session.user_id};
     internalApiCall(users, queryParams)
-      .then(results => results.length !== 0);
+      .then(results => {
+        if (results.length === 0) {
+          return false;
+        } else {
+          return {
+            username: results.username, 
+            email: results.email
+          };
+        }
+      });
   }
-
+    
 };
