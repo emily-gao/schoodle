@@ -9,13 +9,15 @@
         <% if (vote.isOK) { count++ } %>
       <% }); %>
       <% event_option["count"] = count; %>
-      <% countArr.push(count) %>
+      <% countArr.push(count); %>
     <% }); %>
     
-    <% var maxCount = Math.max(countArr); %>
+    <% var maxCount = Math.max.apply(null, countArr); %>
+    <% var chosen = 0; %>
     <% event_options.forEach(function(event_option) { %>
-      <% if (event_option.count === maxCount) { %>
-        <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %><%= event_option.count %></a>
+      <% if (event_option.count === maxCount && chosen === 0) { %>
+        <a class="event-choice btn btn-success btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right" hidden>clear</i><i class="yes material-icons right">check</i><%= event_option.option %><%= event_option.count %></a>
+        <% chosen = 1 %>
       <% } else { %>
         <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %><%= event_option.count %></a>
       <% } %>
