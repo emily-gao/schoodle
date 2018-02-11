@@ -14,7 +14,9 @@ function addClientRoutes(router, knex) {
 
   router.post('/register', (request, response) => {
     request.session.user_id = request.body.user_id;
-    response.status(200).send();
+    userHelper.isUserSessionPresent(request, (result) => {
+      response.json(result);
+    });
   });
 
   router.get('/session', (request, response) => {
@@ -25,7 +27,7 @@ function addClientRoutes(router, knex) {
 
   router.get('/events/:url', (request, response) => {
 
-    let templateVars = {};
+    const templateVars = {};
 
     const eventQuery = knex
       .select('*')
@@ -83,7 +85,6 @@ function addClientRoutes(router, knex) {
         }));
       })
     ]).then(() => {
-      console.log(request.get('Content-Type'));
       if (request.get('Content-Type') === 'application/json') {
         response.json(templateVars);
       } else if (userHelper.isUserOrganizer(templateVars.event, request)) {

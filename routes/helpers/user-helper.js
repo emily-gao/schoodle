@@ -21,6 +21,7 @@ module.exports = {
           callback(false);
         } else {
           callback({
+            id: results[0].id,
             username: results[0].username,
             email: results[0].email
           });

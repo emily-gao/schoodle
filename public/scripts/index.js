@@ -5,17 +5,17 @@ $(function() {
     method: "GET",
     url: "/session",
     success: function(user) {
-      if (user) {
-        $('.new-schoodle-form')
-          .find("[name='username']")
-          .val(user.username)
-          .prop('disabled', true);
+      if (!user) { return; }
 
-        $('.new-schoodle-form')
-          .find("[name='email']")
-          .val(user.email)
-          .prop('disabled', true);
-      }
+      $('.new-schoodle-form')
+        .find("[name='username']")
+        .val(user.username)
+        .prop('disabled', true);
+
+      $('.new-schoodle-form')
+        .find("[name='email']")
+        .val(user.email)
+        .prop('disabled', true);
     }
   });
 
@@ -26,34 +26,36 @@ $(function() {
     event.preventDefault();
 
     $.ajax({
-      method: "POST",
-      url: "api/users",
-      data: $("[name='username'], [name='email']").serialize(),
-      success: function(user_id) {
-        console.log(user_id);
-        $.ajax({
-          method: "POST",
-          url: "/register",
-          data: 'user_id=' + user_id
-        });
-      }
-    }).then(function(user_id) {
+      method: "GET",
+      url: "/session"
+    }).then(function(user) {
+      if (user) { return user; }
       return $.ajax({
         method: "POST",
-        url: "api/events",
-        data: $("[name='event_name'], [name='description']").serialize() + '&organizer_id=' + user_id
-      });
-    }).then(function(event_id) {
-      var options = $('.options').serialize().split('&');
-
-      options.forEach(function(option) {
-        $.ajax({
+        url: "/api/users",
+        data: $("[name='username'], [name='email']").serialize()
+      }).then(function(userIds) {
+        return $.ajax({
+          method: 'POST',
+          url: '/register',
+          data: 'user_id=' + userIds[0]
+        });
+      }).then(function(user) {
+        return $.ajax({
           method: "POST",
-          url: "api/event_options",
-          data: option + '&event_id=' + event_id
+          url: "/api/events",
+          data: $("[name='event_name'], [name='description']").serialize() + '&organizer_id=' + user.id
+        });
+      }).then(function(eventId) {
+        var options = $('.options').serialize().split('&');
+        options.forEach(function(option) {
+          $.ajax({
+            method: "POST",
+            url: "/api/event_options",
+            data: option + '&event_id=' + eventId
+          });
         });
       });
     });
-
   });
 });
