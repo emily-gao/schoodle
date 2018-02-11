@@ -2,6 +2,7 @@
 
 <form>
   <ul id="eventChoices" data-stored-choice="<%= event.final_decision_id || 'none' %>" data-event-id="<%= event.id %>">
+    <!-- count number of votes for each event_option -->
     <% var countArr = []; %>
     <% event_options.forEach(function(event_option) { %>
       <% var count = 0; %>
@@ -11,7 +12,8 @@
       <% event_option["count"] = count; %>
       <% countArr.push(count); %>
     <% }); %>
-
+    
+    <!-- display event_options and auto-select max count -->
     <% var maxCount = Math.max.apply(null, countArr); %>
     <% var chosen = 0; %>
     <% event_options.forEach(function(event_option) { %>
@@ -26,7 +28,3 @@
 
   <button id="notify" class="btn btn-primary btn-block">Notify Participants</button>
 </form>
-
-    <!-- todo: highlight vote with the biggest count -->
-
-    <!-- todo: once a final decision is made, users cannot vote anymore -->
