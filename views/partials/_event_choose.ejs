@@ -2,31 +2,29 @@
 
 <form>
   <ul id="eventChoices" data-current-choice="<%= event.choice_id %>">
-   <% event_options.forEach(function(event_option) { %>
-      <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %></a>
+    <% var countArr = []; %>
+    <% event_options.forEach(function(event_option) { %>
+      <% var count = 0; %>
+      <% event_option.votes.forEach(function(vote) { %>
+        <% if (vote.isOK) { count++ } %>
+      <% }); %>
+      <% event_option["count"] = count; %>
+      <% countArr.push(count) %>
     <% }); %>
+    
+    <% var maxCount = Math.max(countArr); %>
+    <% event_options.forEach(function(event_option) { %>
+      <% if (event_option.count === maxCount) { %>
+        <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %><%= event_option.count %></a>
+      <% } else { %>
+        <a class="event-choice btn btn-danger btn-block" data-event-option-id="<% event_option.id %>"><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i><%= event_option.option %><%= event_option.count %></a>
+      <% } %>
+    <% }) %>
   </ul>
 
   <button id="notify" class="btn btn-primary btn-block">Notify Participants</button>
 </form>
 
-
-    <!-- list counts of each event option  -->
-<!--     <%# users.forEach(function(user) { %>
-      <p><%#= user %></p>
-      <%# event_options.forEach(function(event_option) { %>
-        <%# user.votes.forEach(function(vote) { %>
-          <%# var count = 0; %>
-          <%# if (vote.user_id === user && vote.event_option_id === event_option) { %>
-            <li><%#= count++ %></li>
-          <%# } %>
-          <%#= count %>
-        <%# }); %>
-      <%# }); %>
-    <%# }); %> -->
-
     <!-- todo: highlight vote with the biggest count -->
-
-    <!-- todo: register final decision -->
 
     <!-- todo: once a final decision is made, users cannot vote anymore -->
