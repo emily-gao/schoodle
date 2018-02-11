@@ -9,17 +9,18 @@ const userHelper = require('./helpers/user-helper');
 function addClientRoutes(router, knex) {
 
   router.get('/', (request, response) => {
-    console.log(request.session);
     response.render('index');
   });
 
   router.post('/register', (request, response) => {
-    console.log(request.body);
     request.session.user_id = request.body.user_id;
+    response.status(200).send();
   });
 
   router.get('/session', (request, response) => {
-    return response.json(userHelper.isUserSessionPresent(request));
+    userHelper.isUserSessionPresent(request, (result) => {
+      response.json(result);
+    });
   });
 
   router.get('/events/:id', (request, res) => {
