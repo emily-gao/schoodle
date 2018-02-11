@@ -5,10 +5,10 @@ $(function() {
     method: "GET",
     url: "/session",
     success: function(user) {
-      if (user.username) {
+      if (user) {
         $('.new-schoodle-form')
           .find("[name='username']")
-          .val(userName.value)
+          .val(user.username)
           .prop('disabled', true);
 
         $('.new-schoodle-form')

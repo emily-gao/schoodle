@@ -10,21 +10,20 @@ module.exports = {
     }
   },
 
-  isUserSessionPresent: function(req) {
+  isUserSessionPresent: function(req, callback) {
     if (!req.session || !req.session.user_id) {
       return false;
     }
     const queryParams = { id: req.session.user_id };
-    internalApiCall(users, queryParams)
+    internalApiCall('users', queryParams)
       .then(results => {
-        console.log(results);
         if (results.length === 0) {
-          return false;
+          callback(false);
         } else {
-          return {
-            username: results.username,
-            email: results.email
-          };
+          callback({
+            username: results[0].username,
+            email: results[0].email
+          });
         }
       });
   }
