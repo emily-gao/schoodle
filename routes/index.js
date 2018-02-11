@@ -5,7 +5,6 @@ const PORT = process.env.PORT || 8080;
 
 const request = require('request-promise');
 const userHelper = require('./helpers/user-helper');
-const internalApiCall = require('./helpers/internal-api-call-helper');
 
 function addClientRoutes(router, knex) {
 
@@ -17,8 +16,8 @@ function addClientRoutes(router, knex) {
     req.session.user_id = req.params.user_id;
   });
 
-  route.get('/session', (request, response) => {
-    return response.json{ value: userHelper.isUserSessionPresent(request) };
+  router.get('/session', (request, response) => {
+    return response.json(userHelper.isUserSessionPresent(request));
   });
 
   router.get('/events/:id', (req, res) => {
