@@ -23,19 +23,20 @@ function addClientRoutes(router, knex) {
     });
   });
 
-  router.get('/events/:id', (request, res) => {
+  router.get('/events/:url', (request, response) => {
 
     let templateVars = {};
 
     const eventQuery = knex
       .select('*')
       .from('events')
-      .where('id', request.params.id);
+      .where('url', request.params.url);
 
     const optionsQuery = knex
       .select('*')
       .from('event_options')
-      .where('event_id', request.params.id);
+      .join('events', 'events.id', 'event_options.event_id')
+      .where('events.url', request.params.url);
 
     const optionVotesQuery = function(option) {
       return knex
@@ -51,11 +52,11 @@ function addClientRoutes(router, knex) {
       .leftJoin('event_options', 'events.id', 'event_options.event_id')
       .leftJoin('votes', 'event_options.id', 'votes.event_option_id')
       .leftJoin('users', 'votes.user_id', 'users.id')
-      .where('events.id', request.params.id);
+      .where('events.url', request.params.url);
 
     const userEventVotesQuery = function(user, event) {
       return knex
-        .select('*')
+        .select('votes.*')
         .from('users')
         .innerJoin('votes', 'votes.user_id', 'users.id')
         .innerJoin('event_options', 'event_options.id', 'votes.event_option_id')
@@ -82,10 +83,13 @@ function addClientRoutes(router, knex) {
         }));
       })
     ]).then(() => {
-      if (userHelper.isUserOrganizer(templateVars.event, req)) {
-        res.render('event-organizer', templateVars);
+      console.log(request.get('Content-Type'));
+      if (request.get('Content-Type') === 'application/json') {
+        response.json(templateVars);
+      } else if (userHelper.isUserOrganizer(templateVars.event, request)) {
+        response.render('event-organizer', templateVars);
       } else {
-        res.render('event-guest', templateVars);
+        response.render('event-guest', templateVars);
       }
     });
   });

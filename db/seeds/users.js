@@ -3,9 +3,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('users')
         .returning('id')
-        .insert([{username: 'Alice', email: 'alice@gmail.com'}, 
-              {username: 'Bob', email: 'bob@gmail.com'}, 
-              {username: 'Charlie', email: 'charlie@gmail.com'}])
+        .insert([{username: 'Alice', email: 'a@lice.com'}, {username: 'Bob', email: 'b@ob.com'}, {username: 'Charlie', email: 'c@harlie.com'}])
         .then(function(userIds) { console.log(userIds);
           return knex('events')
             .returning('id')
