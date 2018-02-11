@@ -3,6 +3,10 @@ $(function() {
   // On load
   var url = $("[name='url'").val();
   
+  $(":checkbox").change(function(){
+    $(this).val($(this).is(":checked") ? true : false);
+  });
+
   $.ajax({
     method: "GET",
     url: "/session",
@@ -21,18 +25,23 @@ $(function() {
       $.ajax({
         method: "GET",
         url: '/events/' + url,
-        dataType: "JSON",
+        beforeSend: function(request) {
+          request.setRequestHeader('Content-Type', 'application/json')
+        },
         success: function(results) {
-          console.log(results);
           var currentUser = results.users.filter(function(arrUser) {return (arrUser.id === user.id); })[0];
-          currentUser.votes.forEach(function(vote) {
-            var event_option_id = vote.event_option_id;
-            if (vote.isOK) {
-              $('.new-vote-form')
-              .find("[data-event_option='<%= event_option.id %>']")
-              .prop('checked', true);
-            }
-          });
+          if (currentUser) {
+            currentUser.votes.forEach(function(vote) {
+              var event_option_id = vote.event_option_id;
+              if (vote.isOK) {
+                $('.new-vote-form')
+                .find("[data-event_option='"+ event_option_id + "']")
+                .prop('checked', true);
+              }
+            });
+          } else {
+            return;
+          }
         }
       });
     }
@@ -49,32 +58,50 @@ $(function() {
       $.ajax({
         method: "GET",
         url: '/events/' + url,
-        dataType: "JSON"
+        beforeSend: function(request) {
+          request.setRequestHeader('Content-Type', 'application/json')
+        }
       }),
 
       $.ajax({
-        method: "POST",
-        url: "/api/users",
-        data: $("[name='username'], [name='email']").serialize(),
-        success: function(user_id) {
+        method: "GET",
+        url: "/session"
+      }).then(function(user) {
+        if (user) { return user; }
+        return $.ajax({
+          method: "POST",
+          url: "/api/users",
+          data: $("[name='username'], [name='email']").serialize()
+        }).then(function(userIds) {
           return $.ajax({
-            method: "POST",
-            url: "/register",
-            data: 'user_id=' + user_id
+            method: 'POST',
+            url: '/register',
+            data: 'user_id=' + userIds[0]
           });
-        }
+        });
       })
 
     ]).then(function([results, user]) {
-      
-      console.log([results, user]);
       results.event_options.forEach(function(event_option) {
-        $.ajax({
-          method: "POST",
-          url: "/api/votes",
-          data: "user_id=" + user.id + "&" + "event_option_id=" + event_option.id
-        });
-      })
+        var currentUser = results.users.filter(function(arrUser) {return (arrUser.id === user.id); })[0];
+        if (currentUser && currentUser.votes.map(function(option) {return option.event_option_id}).includes(event_option.id)) {
+          currentUser.votes.forEach(function(vote) {
+            $.ajax({
+              method: "PATCH",
+              url: "/api/votes/" + vote.id,
+              data: "isOK=" + $('.new-vote-form').find("[data-event_option='"+ event_option.id + "']").val()
+            });
+          });
+        } else {
+          $.ajax({
+            method: "POST",
+            url: "/api/votes",
+            data: "user_id=" + user.id + "&event_option_id=" + event_option.id + "&isOK=" + $('.new-vote-form')
+            .find("[data-event_option='"+ event_option.id + "']").val()
+          });
+        }
+
+      });
 
     })
   

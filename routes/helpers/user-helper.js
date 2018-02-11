@@ -1,7 +1,7 @@
 const internalApiCall = require('./internal-api-call-helper');
 
 module.exports = {
-
+  
   isUserOrganizer: function(event, request) {
     if (!request.session || !request.session.user_id || (request.session.user_id !== event.organizer_id)) {
       return false;
@@ -9,13 +9,14 @@ module.exports = {
       return true;
     }
   },
-
+  
   isUserSessionPresent: function(request, callback) {
     if (!request.session || !request.session.user_id) {
-      return false;
-    }
-    const queryParams = { id: request.session.user_id };
-    internalApiCall('users', queryParams)
+      console.log('*******************');
+      callback(false);
+    } else {
+      const queryParams = { id: request.session.user_id };
+      internalApiCall('users', queryParams)
       .then(results => {
         if (results.length === 0) {
           callback(false);
@@ -27,6 +28,7 @@ module.exports = {
           });
         }
       });
+    }
   }
-    
+  
 };

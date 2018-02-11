@@ -35,14 +35,14 @@ function addClientRoutes(router, knex) {
       .where('url', request.params.url);
 
     const optionsQuery = knex
-      .select('*')
+      .select('event_options.*')
       .from('event_options')
       .join('events', 'events.id', 'event_options.event_id')
       .where('events.url', request.params.url);
 
     const optionVotesQuery = function(option) {
       return knex
-        .select('*')
+        .select('votes.*')
         .from('votes')
         .where('event_option_id', option.id);
     };
