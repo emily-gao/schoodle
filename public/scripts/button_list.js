@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $(function() {
+  
     var maxFields = 5;
     var wrapper = $(".input-fields-wrap");
     var addButton = $(".add-field-button");
@@ -18,5 +18,5 @@ $(document).ready(function() {
       $(this).parent("div").remove();
       currentBoxes--;
     });
-  });
+
 });
