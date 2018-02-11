@@ -13,7 +13,10 @@
 function dbRouteFactory(router, knex, tableName) {
 
   router.get(`/api/${tableName}`, (request, response) => {
-    const dbQuery = knex.select().from(tableName);
+    const dbQuery = knex
+      .select()
+      .from(tableName)
+      .orderBy('created_at');
     for (const field of Object.keys(request.query)) {
       dbQuery.where(field, request.query[field]);
     }
@@ -27,6 +30,7 @@ function dbRouteFactory(router, knex, tableName) {
       .select()
       .from(tableName)
       .where('id', request.params.id)
+      .orderBy('created_at')
       .then(results => response.json(results))
       .catch(error => response.status(422).send(error.detail));
   });
