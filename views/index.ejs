@@ -3,25 +3,28 @@
 
 <head>
     <%- include('./partials/_head', {title: 'Index Page'}); %>
+    <script type="text/javascript" src="/scripts/index.js"></script>
 </head>
 
 <body>
-  <form>
+  <form class="new-schoodle-form">
     <%- include ./partials/_navbar %>
     <h1>Step 1</h1>
 
-    <input type="text" name="username" placeholder="Type your name">
-    <input type="text" name="event_name" placeholder="Type your event name">
+    <input type="text" name="username" placeholder="Type your name" required>
+    <input type="text" name="email" placeholder="Type your email" required>
+    <hr>
+    <input type="text" name="event_name" placeholder="Type your event name" required>
     <input type="text" name="description" placeholder="Describe your event">
 
     <h1>Step 2: Select <a href="#">DATE</a> or <a href="#">TEXT</a></h1>
 
     <div class="input-fields-wrap">
       <button class="add-field-button">Add More Fields</button>
-      <div><input class="options" type="text" name="option"></div>
+      <div><input class="options" type="text" name="option" required></div>
     </div>
 
-    <button class="new-schoodle">Create a Schoodle!</button>
+    <button>Create a Schoodle!</button>
   </form>
 </body>
 

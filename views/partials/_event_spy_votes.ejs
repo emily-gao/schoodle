@@ -1,4 +1,4 @@
-<script type="text/javascript" src="scripts/event_vote.js"></script>
+<script type="text/javascript" src="/scripts/event_vote.js"></script>
 
 <form>
    <% event_options.forEach(function(event_option) { %>
@@ -10,12 +10,12 @@
 <section>
     <h1><%= event.event_name %></h1>
     <p><%= event.description %></p>
-    
+
     <!-- list all options horizontally -->
     <% event_options.forEach(function(event_option) { %>
       <li><%= event_option.option %></li>
       <% }); %>
-      
+
     <!-- list each user's votes horizontally -->
     <% users.forEach(function(user) { %>
       <p><%= user.username %></p>
@@ -23,8 +23,8 @@
         <p><%= vote.isOK %></p>
       <% }); %>
     <% }); %>
-              
+
     <!-- add one more row for the new user -->
     <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
-              
+
   </section>
