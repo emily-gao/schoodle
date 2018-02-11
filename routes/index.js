@@ -32,19 +32,22 @@ function addClientRoutes(router, knex) {
     const eventQuery = knex
       .select('*')
       .from('events')
-      .where('url', request.params.url);
+      .where('url', request.params.url)
+      .orderBy('created_at');
 
     const optionsQuery = knex
       .select('event_options.*')
       .from('event_options')
       .join('events', 'events.id', 'event_options.event_id')
-      .where('events.url', request.params.url);
+      .where('events.url', request.params.url)
+      .orderBy('created_at');
 
     const optionVotesQuery = function(option) {
       return knex
         .select('votes.*')
         .from('votes')
-        .where('event_option_id', option.id);
+        .where('event_option_id', option.id)
+        .orderBy('created_at');
     };
 
     const usersQuery = knex
@@ -54,7 +57,8 @@ function addClientRoutes(router, knex) {
       .leftJoin('event_options', 'events.id', 'event_options.event_id')
       .leftJoin('votes', 'event_options.id', 'votes.event_option_id')
       .leftJoin('users', 'votes.user_id', 'users.id')
-      .where('events.url', request.params.url);
+      .where('events.url', request.params.url)
+      .orderBy('created_at');
 
     const userEventVotesQuery = function(user, event) {
       return knex
@@ -65,7 +69,8 @@ function addClientRoutes(router, knex) {
         .where({
           'event_options.event_id': event.id,
           'users.id': user.id
-        });
+        })
+        .orderBy('created_at');
     };
 
     Promise.all([
@@ -85,7 +90,9 @@ function addClientRoutes(router, knex) {
         }));
       })
     ]).then(() => {
-      if (request.get('Content-Type') === 'application/json') {
+      if (!templateVars.event) {
+        response.status(404).send('404: Event not found');
+      } else if (request.get('Content-Type') === 'application/json') {
         response.json(templateVars);
       } else if (userHelper.isUserOrganizer(templateVars.event, request)) {
         response.render('event-organizer', templateVars);

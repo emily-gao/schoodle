@@ -1,30 +1,46 @@
-<script type="text/javascript" src="/scripts/event_vote.js"></script>
+<script type="text/javascript" src="/scripts/event_spy_vote.js"></script>
 
-<form>
-   <% event_options.forEach(function(event_option) { %>
-  <a class="event-vote btn btn-danger btn-block"><%= event_option.option %><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i></a>
-   <% }); %>
+<!-- <form>
+   <%# event_options.forEach(function(event_option) { %>
+  <a class="event-vote btn btn-danger btn-block"><%#= event_option.option %><i class="no material-icons right">clear</i><i class="yes material-icons right" hidden>check</i></a>
+   <%# }); %>
   <button class="btn btn-primary btn-block">Submit Vote</button>
-</form>
+</form> -->
 
-<section>
-    <h1><%= event.event_name %></h1>
-    <p><%= event.description %></p>
+<table class="table table-condensed table-hover">
 
     <!-- list all options horizontally -->
-    <% event_options.forEach(function(event_option) { %>
-      <li><%= event_option.option %></li>
-      <% }); %>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <% event_options.forEach(function(event_option) { %>
+        <th><%= event_option.option %></th>
+        <% }); %>
+      </tr>
+    </thead>
 
     <!-- list each user's votes horizontally -->
+    <tbody>
     <% users.forEach(function(user) { %>
-      <p><%= user.username %></p>
+      <tr>
+      <td><%= user.username %></td>
       <% user.votes.forEach(function(vote) { %>
-        <p><%= vote.isOK %></p>
+        <td>
+          <i class="material-icons"><%= vote.isOK ? 'check' : 'clear' %></i>
+        </td>
       <% }); %>
+      </tr>
     <% }); %>
+    </tbody>
+
+    <tfoot>
+      <td>Total</td>
+      <% event_options.forEach(function(event_option) { %>
+      <td><%= event_option.votes.filter((vote) => vote.isOK).length %></th>
+      <% }); %>
+    </tfoot>
 
     <!-- add one more row for the new user -->
     <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
 
-  </section>
+</table>

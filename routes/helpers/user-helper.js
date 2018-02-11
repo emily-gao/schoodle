@@ -12,22 +12,21 @@ module.exports = {
   
   isUserSessionPresent: function(request, callback) {
     if (!request.session || !request.session.user_id) {
-      console.log('*******************');
       callback(false);
     } else {
       const queryParams = { id: request.session.user_id };
       internalApiCall('users', queryParams)
-      .then(results => {
-        if (results.length === 0) {
-          callback(false);
-        } else {
-          callback({
-            id: results[0].id,
-            username: results[0].username,
-            email: results[0].email
-          });
-        }
-      });
+        .then(results => {
+          if (results.length === 0) {
+            callback(false);
+          } else {
+            callback({
+              id: results[0].id,
+              username: results[0].username,
+              email: results[0].email
+            });
+          }
+        });
     }
   }
   

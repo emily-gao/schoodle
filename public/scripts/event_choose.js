@@ -1,14 +1,16 @@
 $(document).ready(function() {
 
   function refreshChoices($element) {
+    var isAlreadyYes = $element.hasClass('btn-success');
+
     $('eventChoices').data('current-choice', $element.data('event-option-id'));
     $('.event-choice').removeClass('btn-success').addClass('btn-danger');
     $('.event-choice').find('i.yes').hide();
     $('.event-choice').find('i.no').show();
 
-    $element.addClass('btn-success').removeClass('btn-danger');
-    $element.find('i.yes').show();
-    $element.find('i.no').hide();
+    $element.toggleClass('btn-success', !isAlreadyYes).toggleClass('btn-danger', isAlreadyYes);
+    $element.find('i.yes').toggle(!isAlreadyYes);
+    $element.find('i.no').toggle(isAlreadyYes);
   }
 
   $('.event-choice').on('click', function(event) { refreshChoices($(this)); });
