@@ -73,33 +73,59 @@ function addClientRoutes(router, knex) {
         .orderBy('created_at');
     };
 
-    Promise.all([
-      eventQuery.then(events => { templateVars.event = events[0]; }),
-      optionsQuery.then(options => {
-        templateVars.event_options = options;
-        return Promise.all(options.map(option => {
-          return optionVotesQuery(option)
-            .then(votes => option.votes = votes);
-        }));
-      }),
-      usersQuery.then(users => {
-        templateVars.users = users;
-        return Promise.all(users.map(user => {
-          return userEventVotesQuery(user, templateVars.event)
-            .then(votes => user.votes = votes);
-        }));
-      })
-    ]).then(() => {
-      if (!templateVars.event) {
-        response.status(404).send('404: Event not found');
-      } else if (request.get('Content-Type') === 'application/json') {
-        response.json(templateVars);
-      } else if (userHelper.isUserOrganizer(templateVars.event, request)) {
-        response.render('event-organizer', templateVars);
-      } else {
-        response.render('event-guest', templateVars);
-      }
-    });
+    /**
+     * Turn the normalized event data into a tree-like structure
+     * {
+     *    event: <event record>
+     *    event_options: <event_options array + the votes for each>
+     *    users: <users who voted array + their votes>
+     * }
+     */
+    eventQuery
+      // Get the event details for the trunk
+      .then(events => { templateVars.event = events[0]; })
+      .catch(error => {
+        response.status(500).send('Error 500: We messed up getting your event');
+        console.error(error);
+
+      // Get the linked information
+      }).then(() => Promise.all([
+
+        // Get the options that are attached to the event and nest their votes
+        optionsQuery.then(options => {
+          templateVars.event_options = options;
+          return Promise.all(options.map(option => {
+            return optionVotesQuery(option)
+              .then(votes => option.votes = votes);
+          }));
+        }),
+        // Get the users who voted and nest their votes
+        usersQuery.then(users => {
+          templateVars.users = users;
+          return Promise.all(users.map(user => {
+            return userEventVotesQuery(user, templateVars.event)
+              .then(votes => user.votes = votes);
+          }));
+        })
+      ])).catch(error => {
+        response.status(500).send('Error 500: We messed up getting the votes');
+        console.log(error);
+
+      // Send the response in either JSON/html(guest)/html(organizer) form
+      }).then(() => {
+        if (!templateVars.event) {
+          response.status(404).send('404: Event not found');
+        } else if (request.get('Content-Type') === 'application/json') {
+          response.json(templateVars);
+        } else if (userHelper.isUserOrganizer(templateVars.event, request)) {
+          response.render('event-organizer', templateVars);
+        } else {
+          response.render('event-guest', templateVars);
+        }
+      }).catch(error => {
+        response.status(500).send('Error 500: We messed up sending the information');
+        console.log(error);
+      });
   });
 
 }

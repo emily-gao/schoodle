@@ -1,8 +1,9 @@
 $(function() {
-  
+
   // On load
   var url = $("[name='url'").val();
-  
+  var flash = generateFlashFunction($('#appModal'));
+
   $(":checkbox").change(function(){
     $(this).val($(this).is(":checked") ? true : false);
   });
@@ -16,12 +17,12 @@ $(function() {
       .find("[name='username']")
       .val(user.username)
       .prop('disabled', true);
-      
+
       $('.new-vote-form')
       .find("[name='email']")
       .val(user.email)
       .prop('disabled', true);
-        
+
       $.ajax({
         method: "GET",
         url: '/events/' + url,
@@ -36,7 +37,8 @@ $(function() {
               if (vote.isOK) {
                 $('.new-vote-form')
                 .find("[data-event_option='"+ event_option_id + "']")
-                .prop('checked', true);
+                .prop('checked', true)
+                .trigger('change');
               }
             });
           } else {
@@ -46,11 +48,11 @@ $(function() {
       });
     }
   });
-  
+
   // $("#checkbox1").is(':checked', function(){
   //   $("#checkbox1").attr('value', 'true');
   // });
-  
+
   $('.new-vote-form').on('submit', function(event) {
     event.preventDefault();
     console.log('new-vote-form clicked');
@@ -81,30 +83,34 @@ $(function() {
         });
       })
 
-    ]).then(function([results, user]) {
-      results.event_options.forEach(function(event_option) {
-        var currentUser = results.users.filter(function(arrUser) {return (arrUser.id === user.id); })[0];
-        if (currentUser && currentUser.votes.map(function(option) {return option.event_option_id}).includes(event_option.id)) {
-          currentUser.votes.forEach(function(vote) {
-            $.ajax({
-              method: "PATCH",
-              url: "/api/votes/" + vote.id,
-              data: "isOK=" + $('.new-vote-form').find("[data-event_option='"+ event_option.id + "']").val()
-            });
+    ]).then(function(arr) {
+      results = arr[0];
+      user = arr[1];
+      return Promise.all(results.event_options.map(function(event_option) {
+        var currentUser = results.users.filter(function(userElement) { return (userElement.id === user.id); })[0];
+        var userVote = undefined;
+        if (currentUser) {
+          userVote = currentUser.votes.filter(function(vote) { return vote.event_option_id === event_option.id; })[0];
+        }
+        if (currentUser && userVote) {
+          console.log(userVote);
+          return $.ajax({
+            method: "PATCH",
+            url: "/api/votes/" + userVote.id,
+            data: "isOK=" + $('.new-vote-form').find("[data-event_option='" + event_option.id + "']").val()
           });
         } else {
-          $.ajax({
+          return $.ajax({
             method: "POST",
             url: "/api/votes",
             data: "user_id=" + user.id + "&event_option_id=" + event_option.id + "&isOK=" + $('.new-vote-form')
-            .find("[data-event_option='"+ event_option.id + "']").val()
+              .find("[data-event_option='" + event_option.id + "']").val()
           });
         }
 
-      });
+      }));
+    }).then(flash('Thanks for voting :)', 'Votes Saved'));
 
-    })
-  
   });
- 
+
 });

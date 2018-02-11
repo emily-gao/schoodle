@@ -8,24 +8,53 @@
 </head>
 
 <body>
+  <%- include ./partials/_navbar %>
   <form class="new-schoodle-form">
-    <%- include ./partials/_navbar %>
-    <h1>Step 1</h1>
+    <div class="panel-group">
 
-    <input type="text" name="username" placeholder="Type your name" required>
-    <input type="text" name="email" placeholder="Type your email" required>
-    <hr>
-    <input type="text" name="event_name" placeholder="Type your event name" required>
-    <input type="text" name="description" placeholder="Describe your event">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Step 1: Input your information</div>
+        <div class="panel-body">
+          <input type="text" name="username" placeholder="Type your name" required>
+          <input type="text" name="email" placeholder="Type your email" required>
+        </div>
+      </div>
 
-    <h1>Step 2: Select <a href="#">DATE</a> or <a href="#">TEXT</a></h1>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Step 2: Input the event description</div>
+        <div class="panel-body">
+          <input type="text" name="event_name" placeholder="Type your event name" required>
+          <input type="text" name="description" placeholder="Describe your event">
+        </div>
+      </div>
 
-    <div class="input-fields-wrap">
-      <div><input class="options" type="text" name="option" required></div>
-      <a class="add-field-button btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-    </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Step 3: Select <a href="#">DATE</a> or <a href="#">TEXT</a></div>
+        <div class="panel-body">
+          <div class="input-fields-wrap">
+            <div><input class="options" type="text" name="option" required></div>
+            <a class="add-field-button btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapse1">Optional Step 4: Extra Settings</a>
+          </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+          <div class="panel-body">
+            <ul>
+              <li>Come back later for more options!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     <button>Create a Schoodle!</button>
+    </div>
   </form>
 </body>
 
