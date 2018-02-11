@@ -7,10 +7,21 @@
 
 <body>
 
-  <%- include ./partials/_navbar %>
-  <%- include ./partials/_modal %>
-  <%- include ./partials/_event_details %>
-  <%- include ./partials/_guest_tabs %>
+  <% if (event.final_decision_id) { %>
+    <h2><%= event.event_name %></h2>
+    <p><%= event.description %></p>
+    <p>The final decision is....</p>
+    <% event_options.forEach(function(event_option) { %>
+      <% if (event_option.id === event.final_decision_id) { %>
+        <h1><%= event_option.option %>! 🤗 🤗 🤗</h1>
+      <% } %>
+    <% }) %>
+  <% } else { %>
+    <%- include ./partials/_navbar %>
+    <%- include ./partials/_modal %>
+    <%- include ./partials/_event_details %>
+    <%- include ./partials/_guest_tabs %>
+  <% } %>
 
 </body>
 
