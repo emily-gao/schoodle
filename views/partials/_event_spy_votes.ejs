@@ -33,7 +33,14 @@
     <% }); %>
     </tbody>
 
+    <tfoot>
+      <td>Total</td>
+      <% event_options.forEach(function(event_option) { %>
+      <td><%= event_option.votes.filter((vote) => vote.isOK).length %></th>
+      <% }); %>
+    </tfoot>
+
     <!-- add one more row for the new user -->
     <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
 
-  </section>
+</table>
