@@ -45,7 +45,7 @@
   </div>
 
 
-  <form class="new-schoodle-form">
+  <form class="new-schoodle-form col-md-6 col-md-offset-3">
     <div class="panel-group">
 
       <div class="panel panel-primary">
@@ -65,11 +65,15 @@
       </div>
 
       <div class="panel panel-primary">
-        <div class="panel-heading">Step 3: Create Options</div>
-        <div class="panel-body">
+        <div class="panel-heading">Step 3: Create Options
+          <a class="add-field-button btn-floating btn-tiny waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="panel-body" id="options-panel-body">
           <div class="input-fields-wrap">
-            <div><input class="options" type="text" name="option" placeholder="Option" required></div>
-            <a class="add-field-button btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+            <div>
+              <label for="option">Option</label>
+              <input class="options" type="text" name="option" placeholder="Option" required>
+            </div>
           </div>
         </div>
       </div>
