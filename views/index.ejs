@@ -9,6 +9,42 @@
 
 <body>
   <%- include ./partials/_navbar %>
+
+  <div class="modal fade" id="newEventModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">You've made an event!</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>Congratulations on creating an event for your friends to vote on!</p>
+          <p>Here is the link to send:</p>
+          <a id="new-url" href="#"></a>
+          <hr>
+          <p>When you visit the page from your current web browser, you have the option of
+            making a final decision to close down voting and notify the participants</p>
+          <hr>
+
+          <a class="social btn btn-primary waves-effect waves-light" href="https://www.facebook.com/sharer/sharer.php?u="><i class="fa fa-facebook"> </i> <span>Facebook</span> </a>
+          <a class="social btn btn-info waves-effect waves-light" href="https://twitter.com/home?status="><i class="fa fa-twitter"> </i> <span>Twitter</span></a>
+          <a class="btn btn-danger waves-effect waves-light" href="https://plus.google.com/share?url="><i class="fa fa-google-plus"> </i> <span>Google +</span></a>
+        </div>
+
+        <div class="modal-footer">
+          <button id='modal-close' type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
   <form class="new-schoodle-form">
     <div class="panel-group">
 
@@ -16,7 +52,7 @@
         <div class="panel-heading">Step 1: Input your information</div>
         <div class="panel-body">
           <input type="text" name="username" placeholder="Type your name" required>
-          <input type="text" name="email" placeholder="Type your email" required>
+          <input type="email" name="email" placeholder="Type your email" required>
         </div>
       </div>
 
@@ -29,10 +65,10 @@
       </div>
 
       <div class="panel panel-primary">
-        <div class="panel-heading">Step 3: Select <a href="#">DATE</a> or <a href="#">TEXT</a></div>
+        <div class="panel-heading">Step 3: Create Options</div>
         <div class="panel-body">
           <div class="input-fields-wrap">
-            <div><input class="options" type="text" name="option" required></div>
+            <div><input class="options" type="text" name="option" placeholder="Option" required></div>
             <a class="add-field-button btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
           </div>
         </div>
@@ -53,7 +89,7 @@
         </div>
       </div>
 
-    <button>Create a Schoodle!</button>
+    <button class="btn btn-primary">Create a Schoodle!</button>
     </div>
   </form>
 </body>
