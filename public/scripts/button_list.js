@@ -18,7 +18,7 @@ $(document).ready(function() {
   }
 
 
-  var currentBoxes = 1;
+  var currentBoxes = 2;
   $(addButton).click(function(event) {
     event.preventDefault();
     if (currentBoxes < maxFields) {
