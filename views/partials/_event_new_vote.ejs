@@ -1,19 +1,15 @@
 <script type="text/javascript" src="/scripts/event_new_vote.js"></script>
 
-<!-- add one more row for the new user -->
-
 <form class="new-vote-form">
-  
-  <!-- todo: if there is a valid user_id cookie, this row should display the user's username and votes -->
   
   <!-- when valid user_id cookie is not present, ask user to input username and email -->
   <input type="text" name="url" value="<%= event.url %>" style="display:none">
   <input type="text" name="username" placeholder="Type your name here">
   <input type="email" name="email" placeholder="Type your email here">
   
+  <!-- display each event_option and its checkbox -->
   <div class="row">
     <% event_options.forEach(function(event_option) { %>
-      <!-- todo: register vote through a checkbox -->
       <div class="col-lg-12">
         <div class="input-group">
           <p class="form-control" aria-label="Text input with checkbox"><%= event_option.option %></p>
@@ -22,13 +18,9 @@
           </span>
         </div>
       </div>
-    <% }); %>
-      
-      
-      
+    <% }); %>  
   </div>
-    
-    
+      
   <button>Save</button>
 </form>
   
