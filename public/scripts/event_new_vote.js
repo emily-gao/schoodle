@@ -4,8 +4,8 @@ $(function() {
   var url = $("[name='url'").val();
   var flash = generateFlashFunction($('#appModal'));
 
-  $(":checkbox").change(function(){
-    $(this).val($(this).is(":checked") ? true : false);
+  $(":checkbox").change(function() {
+    $(this).val($(this).is(":checked"));
   });
 
   $.ajax({
@@ -14,14 +14,14 @@ $(function() {
     success: function(user) {
       if (!user) { return; }
       $('.new-vote-form')
-      .find("[name='username']")
-      .val(user.username)
-      .prop('disabled', true);
+        .find("[name='username']")
+        .val(user.username)
+        .prop('disabled', true);
 
       $('.new-vote-form')
-      .find("[name='email']")
-      .val(user.email)
-      .prop('disabled', true);
+        .find("[name='email']")
+        .val(user.email)
+        .prop('disabled', true);
 
       $.ajax({
         method: "GET",
@@ -30,15 +30,15 @@ $(function() {
           request.setRequestHeader('Content-Type', 'application/json')
         },
         success: function(results) {
-          var currentUser = results.users.filter(function(arrUser) {return (arrUser.id === user.id); })[0];
+          var currentUser = results.users.filter(function(arrUser) { return (arrUser.id === user.id); })[0];
           if (currentUser) {
             currentUser.votes.forEach(function(vote) {
               var event_option_id = vote.event_option_id;
               if (vote.isOK) {
                 $('.new-vote-form')
-                .find("[data-event_option='"+ event_option_id + "']")
-                .prop('checked', true)
-                .trigger('change');
+                  .find("[data-event_option='" + event_option_id + "']")
+                  .prop('checked', true)
+                  .trigger('change');
               }
             });
           } else {
