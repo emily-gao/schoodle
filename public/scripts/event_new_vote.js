@@ -23,6 +23,8 @@ $(function() {
         .val(user.email)
         .prop('disabled', true);
 
+      Materialize.updateTextFields();
+
       $.ajax({
         method: "GET",
         url: '/events/' + url,

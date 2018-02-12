@@ -16,6 +16,8 @@ $(function() {
         .find("[name='email']")
         .val(user.email)
         .prop('disabled', true);
+
+      Materialize.updateTextFields();
     }
   });
 

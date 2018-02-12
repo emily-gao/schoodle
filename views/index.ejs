@@ -51,16 +51,28 @@
       <div class="panel panel-primary">
         <div class="panel-heading">Step 1: Input your information</div>
         <div class="panel-body">
-          <input type="text" name="username" placeholder="Type your name" required>
-          <input type="email" name="email" placeholder="Type your email" required>
+          <div class="input-field">
+            <input type="text" name="username" required>
+            <label for="username">Name</label>
+          </div>
+          <div class="input-field">
+            <input type="email" name="email" required>
+            <label for="email">Email</label>
+          </div>
         </div>
       </div>
 
       <div class="panel panel-primary">
         <div class="panel-heading">Step 2: Input the event description</div>
         <div class="panel-body">
-          <input type="text" name="event_name" placeholder="Type your event name" required>
-          <input type="text" name="description" placeholder="Describe your event">
+          <div class="input-field">
+            <label for="event_name">Event Name</label>
+            <input type="text" name="event_name" required>
+          </div>
+          <div class="input-field">
+            <input type="text" name="description">
+            <label for="description">Event Description</label>
+          </div>
         </div>
       </div>
 
@@ -70,9 +82,9 @@
         </div>
         <div class="panel-body" id="options-panel-body">
           <div class="input-fields-wrap">
-            <div>
+            <div class="input-field">
               <label for="option">Option</label>
-              <input class="options" type="text" name="option" placeholder="Option" required>
+              <input class="options" type="text" name="option"required>
             </div>
           </div>
         </div>

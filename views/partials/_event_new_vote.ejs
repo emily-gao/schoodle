@@ -1,12 +1,19 @@
 <script type="text/javascript" src="/scripts/event_new_vote.js"></script>
 
 <form class="new-vote-form">
-  
+
   <!-- when valid user_id cookie is not present, ask user to input username and email -->
   <input type="text" name="url" value="<%= event.url %>" style="display:none">
-  <input type="text" name="username" placeholder="Type your name here">
-  <input type="email" name="email" placeholder="Type your email here">
-  
+
+  <div class="input-field">
+    <input type="text" name="username">
+    <label for="username">Name</label>
+  </div>
+  <div class="input-field">
+    <input type="email" name="email">
+    <label for="email">Email</label>
+  </div>
+
   <!-- display each event_option and its checkbox -->
   <div class="row">
     <% event_options.forEach(function(event_option) { %>
@@ -18,9 +25,9 @@
           </span>
         </div>
       </div>
-    <% }); %>  
+    <% }); %>
   </div>
-      
+
   <button class="btn btn-primary btn-block">Save</button>
 </form>
-  
+
