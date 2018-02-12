@@ -21,13 +21,11 @@
         <% count++; %>
         <div>
           <input type="text" name="option" class="event-options" data-event_option="<%= event_option.id %>">
-          <a class="remove-field btn-floating btn-small waves-effect waves-light green"><i class="material-icons">remove</i></a>
         </div>
       <% }); %>
     </div>
-    <a class="add-field-button btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
     
     <input type="text" name="count" value="<%= count %>" style="display:none">
-    <button>Update</button>
+    <button class="btn btn-primary btn-block">Update</button>
   </form>
 </div>
