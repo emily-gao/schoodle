@@ -1,5 +1,5 @@
-$(document).ready(function() {   
-  
+$(document).ready(function() {
+
   var url = $("[name='url'").val();
   $.ajax({
     method: 'GET',
@@ -12,10 +12,10 @@ $(document).ready(function() {
       console.log(results.event.event_name);
       $('#event_name')
       .val(results.event.event_name);
-      
+
       $('#event_description')
       .val(results.event.description);
-      
+
       results.event_options.forEach(function(event_option) {
         $('.event-edit')
         .find("[data-event_option='"+ event_option.id + "']")
@@ -23,13 +23,13 @@ $(document).ready(function() {
       });
     }
   });
-  
+
   // var maxFields = 5;
   // var wrapper = $(".input-fields-wrap");
   // var addButton = $(".add-field-button");
-  
+
   // var currentBoxes = $("[name='count'").val();
-  
+
   // $(addButton).click(function(event) {
   //   event.preventDefault();
   //   event.stopPropagation();
@@ -38,7 +38,7 @@ $(document).ready(function() {
   //     $(wrapper).append('<div><input class="options" type="text" name="option" required/><a class="remove-field btn-floating btn-small waves-effect waves-light green"><i class="material-icons">remove</i></a></div>');
   //   }
   // });
-  
+
   // $(wrapper).on("click", ".remove_field", function(event) {
   //   event.preventDefault();
   //   event.stopPropagation();
@@ -46,7 +46,9 @@ $(document).ready(function() {
   //   $(this).parent("div").remove();
   //   currentBoxes--;
   // });
-  
+
+  var flash = generateFlashFunction($('#appModal'));
+
   $('.event-edit').on('submit', function(event) {
     event.preventDefault();
     console.log('***************event-edit clicked*******************');
@@ -64,8 +66,8 @@ $(document).ready(function() {
         url: '/api/events/' + results.event.id,
         data: $("[name='event_name'], [name='description']").serialize()
       });
-      
-      results.event_options.forEach(function(event_option) { 
+
+      results.event_options.forEach(function(event_option) {
         if (!$("[data-event_option='" + event_option.id + "']")) {
           $.ajax({
             method: 'DELETE',
@@ -78,8 +80,9 @@ $(document).ready(function() {
             data: $("[data-event_option='" + event_option.id + "']").serialize()
           });
         }
-      }); 
-    })
+        flash('Your event information has been updated', 'Update Successful');
+      });
+    });
   });
-  
+
 });
